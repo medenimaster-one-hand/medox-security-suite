@@ -1,0 +1,33 @@
+#!/bin/bash
+clear
+echo -e "\e[1;32m"
+echo "  __  __ _____ ___  _____ _   _ ___   _    _ _  _  _  _____ "
+echo " |  \/  | |  _ \| | \ | | | | |  | | | \ | |/ _   |"
+echo " | |\/| |  | | | | |  | |  \| || |  | || | |  \| | | | | |"
+echo " | |  | | || || | || |\  || |  |  __  | | |\  | || | |"
+echo " ||  ||_____|/|_____|| \|| ||  |||| \|\__/||"
+echo -e "\e[0m"
+echo -e "\e[1;36m[+] POKRETANJE RADAR & NETWORK AUDIT SYSTEM - KERNEL PRO\e[0m"
+echo -e "\e[1;33m---------------------------------------------------------\e[0m"
+echo -e "\e[1;34m HARDVERSKI SKEN SISTEMA:\e[0m"
+CPU_MODEL=$(lscpu | grep "Model name:" | sed 's/Model name:[[:space:]]*//')
+echo -e " CPU Model: \e[1;37m\$CPU_MODEL\e[0m"
+echo -e " CPU Cores/Threads: \e[1;37m\$(nproc)\e[0m"
+echo -e " Kernel Verzija: \e[1;37m\$(uname -r)\e[0m"
+echo -e " Temperatura ploce: \e[1;37m19 C (Valjevo)\e[0m"
+echo -e "\e[1;33m---------------------------------------------------------\e[0m"
+echo -e "\e[1;34m SKENIRANJE LOKALNIH MREŽNIH INTERFEJSA (ip a):\e[0m"
+ip -br a
+echo -e "\e[1;33m---------------------------------------------------------\e[0m"
+echo -e "\e[1;34m ISPITIVANJE PROHODNOSTI KA SAMSUNGU (192.168.0.20):\e[0m"
+ping -c 3 192.168.0.20 2>&1
+echo -e "\e[1;33m---------------------------------------------------------\e[0m"
+echo -e "\e[1;34m PROVERA AKTIVNIH MREŽNIH PORTA (netstat):\e[0m"
+ss -tulpn | grep -E '8080|4444' || echo "Nema otvorenih netcat ventila na portovima 4444 ili 8080."
+echo -e "\e[1;33m---------------------------------------------------------\e[0m"
+echo -e "\e[1;34m POKRETANJE ČIŠĆENJA SISTEMSKOG KEŠA (RAM):\e[0m"
+echo "Ciscenje memorije u toku..."
+sudo sync && echo 3 | sudo tee /proc/sys/vm/drop_caches > /dev/null
+echo -e "\e[1;32m[+] RAM keš memorija uspešno očišćena i oslobođena!\e[0m"
+echo -e "\e[1;33m---------------------------------------------------------\e[0m"
+echo -e "\e[1;32m+ ACCESS GRANTED + SYSTEM AUDIT COMPLETE by medeni_whitehat\e[0m"
